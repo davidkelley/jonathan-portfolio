@@ -25,7 +25,7 @@
  */
 requirejs.config({
 	
-    baseUrl: '/js/modules',
+    baseUrl: 'js/modules',
     
     /**
      * Module variables
@@ -56,10 +56,8 @@ requirejs.config({
     }
 });
 
-require(['init', 'components/modernizr'], function(init) {
-	if (init) return true;
-	return false;
-});
+//init modernizr
+require(['components/modernizr']);
 
 /**
  * Perform post-initialisation DOM manipulations
