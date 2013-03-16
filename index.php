@@ -38,16 +38,19 @@
 		<meta property="og:image" content="apple-touch-icon-114x114-precomposed.png"/> 
 		<meta property="og:type" content="website"/>
 
+		<script data-main="js/main" src="js/components/require.js"></script>
+
         <link type="text/plain" rel="author" href="http://jonathankelley.me/humans.txt" />
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/main.css">
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,600,400' rel='stylesheet' type='text/css'>
     </head>
     <body>
 
         <!-- Add your site or application content here -->
-        <p>Hello world! This is HTML5 Boilerplate.</p>
+        <p id="hello"><span>Hello</span> world! This is HTML5 Boilerplate.</p>
 
-		<script data-main="js/main" src="js/components/require.js"></script>
+        <img src="http://i.imgur.com/LvykwfG.jpg" />
 
         <script>
             var _gaq=[['_setAccount','UA-39343545-1'],['_trackPageview']];

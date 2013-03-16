@@ -50,7 +50,7 @@ requirejs.config({
 	},
 
     paths: {
-    	jquery : 'https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js',
+    	jquery : 'https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min',
         components: '../components',
         helpers: '../helpers',
     }
@@ -58,6 +58,11 @@ requirejs.config({
 
 //init modernizr
 require(['components/modernizr']);
+
+//init loading module
+require(['loader'], function(Loader) {
+	var loader = new Loader(document.body);
+});
 
 /**
  * Perform post-initialisation DOM manipulations
