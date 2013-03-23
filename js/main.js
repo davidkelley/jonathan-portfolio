@@ -31,7 +31,10 @@ requirejs.config({
      * Module variables
      */
     config: {
-
+        scroller: {
+            container: '.frames',
+            sizer: '#content'
+        }
 	},
     
     shim: {
@@ -60,8 +63,14 @@ requirejs.config({
 require(['components/modernizr']);
 
 //init loading module
-require(['loader'], function(Loader) {
-	var loader = new Loader(document.body);
+require(['loader', 'jquery', 'scroller'], function(Loader, $) {
+	var loader = new Loader(document.body, function() {
+        $('.loader', this.container).fadeOut(800, function() {
+            require(['header'], function(header) {
+                header.show();
+            })
+        });
+    });
 });
 
 /**

@@ -1,4 +1,4 @@
-define(["components/zepto"],
+define(["jquery"],
 
 /**
  * This module is responsible for all bindings currently present within the application.

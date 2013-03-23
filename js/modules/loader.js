@@ -1,14 +1,12 @@
 define(['jquery'], function($) {
 
-	//get all image tags
-	var imgs = $('img');
-
 	//percentage loaded
-	var Loader = function Loader(container) {
+	var Loader = function Loader(container, complete) {
 
 		if (container === void 0) throw new Exception("Loader needs container element");
-
+		this.loaded = 0;
 		this.container = container;
+		this.complete = complete;
 		this.imgs = $('img', container);
 
 		this.check();
@@ -21,7 +19,9 @@ define(['jquery'], function($) {
 
 				if (this.hasBackground(el)) {
 					var img = new Image();
-					img.src = $(el).css('backgroundImage');
+					//remove url(...);
+					var src = $(el).css('backgroundImage').replace(/^url\(|\)$/g, '');
+					img.src = src;
 					this.imgs.push(img);
 				}
 			}
@@ -33,17 +33,20 @@ define(['jquery'], function($) {
 		//ensure loading timeout does not occur
 		this.timeoutID = setTimeout(function() {
 			//override!
-			try { that.increment(100); } catch(e) {};
+			try { 
+				if (that.loaded < 100) {
+					console.log('timed out...');
+					that.increment(100); 
+				}
+			} catch(e) {};
 		},5000);
 
 		//images found?
-		console.log(['images', this.imgs.length]);
 		if (this.imgs.length > 0) {
 			//determine percentile for each image
-			var percentile = Math.ceil(100/this.imgs.length);
+			var percentile = 100/this.imgs.length;
 
 			[].forEach.call(this.imgs, function(el) {
-				console.log([el, el.src]);
 				if (el.complete && (typeof el.naturalWidth == "number" && el.naturalWidth > 0)) {
 					that.increment(percentile);
 				} else {
@@ -65,11 +68,14 @@ define(['jquery'], function($) {
 		} else {
 			$(this.container).removeClass('loading');
 			$(this.container).addClass('loaded');
+
+			if (typeof(this.complete) == "function") {
+				this.complete.call(this);
+			}
 		}
 	};
 
 	Loader.prototype.increment = function(val) {
-		console.log(val);
 		if (this.loaded + val > this.loaded) {
 			this.loaded += val;
 			this.adjust();
@@ -78,11 +84,7 @@ define(['jquery'], function($) {
 	};
 
 	Loader.prototype.adjust = function() {
-		require(['helpers/animator'], function(animate) {
-			animate($('.percentage', this.container), {
-				width: this.loaded
-			});
-		});
+		$('.percentage', this.container).width(this.loaded+'%');
 	}
 
 	//determine if element has a background style
@@ -92,9 +94,11 @@ define(['jquery'], function($) {
 				return true;
 			}	
 		} else if (window.getComputedStyle) {
-			var style = document.defaultView.getComputedStyle(el, null);
-			if (style && style.getPropertyValue('background-image') !== 'none') {
-				return true;
+			if (typeof el === "object") {
+				var style = document.defaultView.getComputedStyle(el, null);
+				if (style && style.getPropertyValue('background-image') !== 'none') {
+					return true;
+				}
 			}
 		}
 

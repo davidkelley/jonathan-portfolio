@@ -45,12 +45,57 @@
         <link rel="stylesheet" href="css/main.css">
         <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,600,400' rel='stylesheet' type='text/css'>
     </head>
-    <body>
+    <body class="loading">
 
-        <!-- Add your site or application content here -->
-        <p id="hello"><span>Hello</span> world! This is HTML5 Boilerplate.</p>
+    	<div class="loader table">
+    		<div class="cell">
+    			<div class="loading">
+    				<div class="percentage progress"></div>
+    				<img src="images/loading.png" />
+    			</div>
+    		</div>
+    	</div>
 
-        <img src="http://i.imgur.com/LvykwfG.jpg" />
+        <header>
+            <div class="wrapper clearfix">
+                <a href="#top">
+                    <img class="logo" src="images/logo/large-black.png" />
+                </a>
+                <nav>
+                    <ul>
+                        <li><a href="">About</a></li>
+                        <li><a href="">Contact</a></li>
+                        <li><a href="">Blog</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+
+        <div id="content">
+
+            <ul class="frames">
+                <li id="home" class="active frame">
+                    <video autoplay loop>
+                        <source src="video/home/main.mp4" type="video/mp4">
+                        <source src="video/home/main.ogv" type="video/ogv">
+                        <source src="video/home/main.webm" type="video/webm">
+                    </video>
+                </li>
+
+                <li id="frame-1" class="frame">
+                </li>
+
+                <li id="frame-2" class="frame">
+                </li>
+                <li id="frame-3" class="frame">
+                </li>
+                <li id="frame-4" class="frame">
+                </li>
+                <li id="frame-5" class="frame">
+                </li>
+            </ul>
+
+        </div>
 
         <script>
             var _gaq=[['_setAccount','UA-39343545-1'],['_trackPageview']];
