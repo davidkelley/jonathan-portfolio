@@ -1,8 +1,8 @@
-define(['jquery', 'module'], function($, module) {
+define(['jquery', 'module', 'helpers/binder'], function($, module, Binder) {
 
+	var images = $(module.config().imageSelector)
 	var container = $(module.config().container);
 	var frames = container.children();
-	var sizer = $(module.config().sizer);
 	var w = $(window);
 
 	var animating = false;
@@ -16,8 +16,44 @@ define(['jquery', 'module'], function($, module) {
 			m.scroller(delta);
 		},
 
-		touch: function(e) {
-			//TODO
+		keypress: function(e) {
+			var code = e.keyCode || e.charCode;
+
+			switch (code) {
+				case 40: 
+					m.scroller(-1);
+					break;
+				case 38:
+					m.scroller(1);
+					break;
+			}
+		},
+
+		adjustClasses: function(c, n) {
+			var a = c.attr('id');
+			var b = n.attr('id');
+
+			$('html').removeClass(a).addClass(b);
+			c.removeClass('active');
+			n.addClass('active');
+		},
+
+		footer: {
+			visible: function() {
+				return $('html').hasClass('footer-visible');
+			},
+
+			show: function () {
+				if ( ! animating) {
+					$('html').addClass('footer-visible');
+				}
+			},
+
+			hide: function() {
+				animating = true;
+				$('html').removeClass('footer-visible');
+				setTimeout(function() { animating = false; }, 1200);
+			}
 		},
 
 		scroller: function(y) {
@@ -29,14 +65,18 @@ define(['jquery', 'module'], function($, module) {
 			var current = $('.active', container);
 
 			if (y > 0) {
+
+				if (m.footer.visible()) {
+					m.footer.hide();
+					return;
+				}
+				
 				//scroll up
 				if (current.prev().length > 0) {
 
-					frame -= 1;
-
-					m.animate(current, h, function() {
-						current.removeClass('active');
-						current.prev().addClass('active');
+					m.animate(current, 0, function() {	
+						frame -= 1;
+						m.adjustClasses(current, current.prev());
 					});
 				}
 			} else {
@@ -45,22 +85,16 @@ define(['jquery', 'module'], function($, module) {
 
 				if (next.length > 0) {
 
-					frame += 1;
-
-					m.animate(next, 0, function() {
-						current.removeClass('active');
-						next.addClass('active');
+					m.animate(next, h, function() {
+						frame += 1;
+						m.adjustClasses(current, next);
 					});
+				} else {
+					m.footer.show();
 				}
 			}
 
-			require(['header'], function(header) {
-				if (frame > 0) {
-					header.hide();
-				} else {
-					header.show();
-				}
-			});
+			
 		},
 
 		animate: function(el, val, cb) {
@@ -70,20 +104,29 @@ define(['jquery', 'module'], function($, module) {
 				}
 
 				animating = true;
-				$(el).stop().animate({top: val}, 1200, function() {
-					animating = false;
-				})
+				$(el).css({height:val});
+				setTimeout(function() { animating = false; }, 1200);
 			}
 		}
 	};
 
-	var evt = (/Firefox/i.test(navigator.userAgent))? "DOMMouseScroll" : "mousewheel";
+	if ( ! Modernizr.touch) {
+		var evt = (/Firefox/i.test(navigator.userAgent))? "DOMMouseScroll" : "mousewheel";
 
-	if (document.attachEvent) {
-		document.attachEvent("on" + evt, m.wheel)
-	} else if (document.addEventListener) {
-		document.addEventListener(evt, m.wheel, false)
+		if (document.attachEvent) {
+			document.attachEvent("on" + evt, m.wheel);
+		} else if (document.addEventListener) {
+			document.addEventListener(evt, m.wheel, false)
+		}
 	}
+
+	var binds = {
+		document: {
+			keydown: [ m.keypress ],
+		}
+	}
+
+	var binder = new Binder(binds);
 
 	//force a sizeup
 	//m.size();

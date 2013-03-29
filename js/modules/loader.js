@@ -16,11 +16,10 @@ define(['jquery'], function($) {
 
 			for (var i in tags) {
 				var el = tags[i];
+				var src = this.getBackground(el);
 
-				if (this.hasBackground(el)) {
+				if (src) {
 					var img = new Image();
-					//remove url(...);
-					var src = $(el).css('backgroundImage').replace(/^url\(|\)$/g, '');
 					img.src = src;
 					this.imgs.push(img);
 				}
@@ -104,7 +103,19 @@ define(['jquery'], function($) {
 
 		return false;
 	};
-	
+
+	Loader.prototype.getBackground = function(el) {
+		if (this.hasBackground(el)) {
+			var src = $(el).css('backgroundImage');
+			src = src.replace(/^url\(|\)$/g, '');
+
+			if (src.match(/\.[a-z0-9]{1,}$/g)) {
+				return src;
+			} else {
+				return null;
+			}
+		}
+	};
 
 	return Loader;
 

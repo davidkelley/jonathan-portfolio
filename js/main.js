@@ -33,7 +33,7 @@ requirejs.config({
     config: {
         scroller: {
             container: '.frames',
-            sizer: '#content'
+            imageSelector: '.hero'
         }
 	},
     
@@ -66,9 +66,7 @@ require(['components/modernizr']);
 require(['loader', 'jquery', 'scroller'], function(Loader, $) {
 	var loader = new Loader(document.body, function() {
         $('.loader', this.container).fadeOut(800, function() {
-            require(['header'], function(header) {
-                header.show();
-            })
+            $('header').addClass('visible');
         });
     });
 });

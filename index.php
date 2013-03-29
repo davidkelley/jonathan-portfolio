@@ -13,7 +13,7 @@
         <meta name="author" content="<?= $meta['author']; ?>"/>
 		<meta name="keywords" content="<?= $meta['keywords']; ?>"/>
 		<meta name="title" content="<?= $meta['title']; ?>"/>
-		<meta name="viewport" content="width = device-width, initial-scale = 1.0, user-scalable = no">
+		<meta name="viewport" content="width = device-width, height = device-height, maximum-scale = 1.0, initial-scale = 1.0, user-scalable = no">
 		<meta name="apple-touch-fullscreen" content="yes" />
 		
 		<meta name="application-name" content="<?= $meta['title']; ?>" />
@@ -43,7 +43,7 @@
         <link type="text/plain" rel="author" href="http://jonathankelley.me/humans.txt" />
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/main.css">
-        <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,600,400' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,300italic,600,400' rel='stylesheet' type='text/css'>
     </head>
     <body class="loading">
 
@@ -58,17 +58,16 @@
 
         <header>
             <div class="wrapper clearfix">
-                <a href="#top">
-                    <img class="logo" src="images/logo/large-black.png" />
-                </a>
-                <nav>
-                    <ul>
-                        <li><a href="">About</a></li>
-                        <li><a href="">Contact</a></li>
-                        <li><a href="">Blog</a></li>
-                    </ul>
-                </nav>
+                <div class="scroll">Scroll to view work</div>
+                <div class="boxes">
+                    <div class="j box"><span>Jonathan</span></div>
+                    <div class="k box"><span>Kelley</span></div>
+                </div>
             </div>
+            <div class="arrow-cover">
+                <div class="arrow up"></div>
+            </div>
+            <div class="arrow down"></div>
         </header>
 
         <div id="content">
@@ -80,20 +79,38 @@
                         <source src="video/home/main.ogv" type="video/ogv">
                         <source src="video/home/main.webm" type="video/webm">
                     </video>
+                    <div class="table banner">
+                        <div class="cell">
+                            <div class="title-container">
+                                <div class="title-inner">
+                                    <h1>Hi there, I'm Jonathan Kelley</h1>
+                                    <h2>A <span>Web Designer</span> based in <span>London, UK</span></h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </li>
 
-                <li id="frame-1" class="frame">
+                <li id="outfitr" class="frame">
+                    <img src="images/work/outfitr-mac.png" class="hero" />
                 </li>
-
-                <li id="frame-2" class="frame">
+                <li id="emi" class="frame">
+                    <img src="images/work/emi-mac.png" class="hero" />
                 </li>
-                <li id="frame-3" class="frame">
+                <li id="everton" class="frame">
+                    <img src="images/work/everton-mac.png" class="hero" />
                 </li>
-                <li id="frame-4" class="frame">
-                </li>
-                <li id="frame-5" class="frame">
+                <li id="piccsy" class="frame">
+                    <img src="images/work/piccsy-mac.png" class="hero" />
                 </li>
             </ul>
+
+            <footer>
+                <div class="wrapper">
+                    Designed by <strong>Jonathan Kelley</strong>
+                    <div class="copyright">&copy;<?= date('Y'); ?></div>
+                </div>
+            </footer>
 
         </div>
 
